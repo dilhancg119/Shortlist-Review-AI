@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/*
+ * Light theme only. This is read at a desk in daylight and on a phone in
+ * meetings, so surfaces stay bright and ink stays dark.
+ *
+ * Neutrals are tinted toward 265 (a cool slate). The interface itself has no
+ * accent hue: selection and emphasis use ink, so the only colour on screen
+ * belongs to the three companies.
+ */
+:root {
+  --bg: oklch(0.984 0.003 265);
+  --surface: oklch(0.997 0.002 265);
+  --panel: oklch(0.966 0.005 265);
+  --wash: oklch(0.95 0.006 265);
+  --line: oklch(0.918 0.006 265);
+  --line-strong: oklch(0.845 0.01 265);
+  --ink: oklch(0.22 0.018 265);
+  --ink-2: oklch(0.42 0.016 265);
+  --ink-3: oklch(0.53 0.014 265);
+  /* Form errors only. Never used for a company or a chart. */
+  --danger: oklch(0.49 0.17 27);
+
+  /*
+   * Company identity colours. Each company keeps its colour in every view.
+   * Checked with the dataviz palette validator against the light surface:
+   * all pairs clear the colour-blind separation target (worst pair 8.6),
+   * and each clears 3:1 against the surface.
+   */
+  --green: #008300;
+  --red: #d9365e;
+  --blue: #2a78d6;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-panel: var(--panel);
+  --color-wash: var(--wash);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-danger: var(--danger);
+  --color-co: var(--co);
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --ease-out: var(--ease-out);
+}
+
+/* Scope a company's colour to an element and everything inside it. */
+.co-green {
+  --co: var(--green);
+}
+.co-reddot {
+  --co: var(--red);
+}
+.co-blue {
+  --co: var(--blue);
+}
+.co-tint {
+  background-color: color-mix(in oklch, var(--co) 8%, var(--surface));
+}
+.co-half {
+  background-color: color-mix(in oklch, var(--co) 42%, var(--surface));
+}
+.co-track {
+  background-color: color-mix(in oklch, var(--co) 14%, var(--surface));
+}
+
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Range inputs on the Opportunity page. */
+input[type="range"] {
+  accent-color: var(--ink);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
